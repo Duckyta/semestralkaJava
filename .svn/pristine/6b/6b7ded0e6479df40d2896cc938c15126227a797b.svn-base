@@ -1,0 +1,237 @@
+package abstr.Heap;
+
+import abstr.zasobnik.IZasobnik;
+import abstr.zasobnik.Zasobnik;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.stream.Stream;
+
+/**
+ *
+ * @author DuckMcQuack
+ * @param <E>
+ */
+public class AbstrHeapImpl<E extends Comparable<E>> implements IAbstrHeapImpl<E> {
+
+    private E[] prioritniFronta;
+    private int velikost;
+
+    public AbstrHeapImpl() {
+        prioritniFronta = null;
+        this.velikost = 0;
+    }
+
+    @Override
+    public boolean jePrazdny() {
+        return (velikost == 0);
+    }
+
+    @Override
+    public E odeberMax() throws IllegalStateException {
+        E[] pole = prioritniFronta;
+        pole[0] = pole[--velikost];
+        pole = (E[]) Array.newInstance(pole.getClass(), --velikost);
+        System.arraycopy(prioritniFronta, 0, pole, 0, prioritniFronta.length);
+        return null;
+    }
+
+    @Override
+    public void reorganizuj(E[] pole, Comparator c) throws NullPointerException {
+        if (prioritniFronta == null) {
+            velikost = pole.length;
+            prioritniFronta = pole;
+        }
+        for (int i = prioritniFronta.length / 2 - 1; i >= 0; i--) {
+            int topIndex = i;
+            int dalsi = topIndex * 2 + 1;
+            int dalsi2 = dalsi++;
+
+            int a = 0;
+            while (dalsi < prioritniFronta.length && dalsi2 < prioritniFronta.length) {
+
+                if (c.compare(prioritniFronta[dalsi], prioritniFronta[dalsi2]) == -1) {
+                    if (c.compare(prioritniFronta[topIndex], prioritniFronta[dalsi]) == 1) {
+                        prohozeni(topIndex, dalsi);
+                    }
+                } else if (c.compare(prioritniFronta[dalsi], prioritniFronta[dalsi2]) == 1) {
+                    if (c.compare(prioritniFronta[topIndex], prioritniFronta[dalsi2]) == 1) {
+                        prohozeni(topIndex, dalsi2);
+                    }
+                } else {
+                }
+                if (a == 0) {
+
+                    topIndex = dalsi - 1;
+                    dalsi = topIndex * 2 + 1;
+                    dalsi2 = topIndex * 2 + 2;
+                    a++;
+
+                } else {
+                    ++topIndex;
+                    dalsi = topIndex * 2 + 1;
+                    dalsi2 = topIndex * 2 + 2;
+
+                }
+            }
+        }
+        for (int i = prioritniFronta.length / 2 - 1; i >= 0; i--) {
+            int topIndex = i;
+            int dalsi = topIndex * 2 + 1;
+            int dalsi2 = dalsi++;
+            int a = 0;
+            while (dalsi < prioritniFronta.length && dalsi2 < prioritniFronta.length) {
+                if (c.compare(prioritniFronta[dalsi], prioritniFronta[dalsi2]) == -1) {
+                    if (c.compare(prioritniFronta[topIndex], prioritniFronta[dalsi]) == 1) {
+                        prohozeni(topIndex, dalsi);
+                    }
+                } else if (c.compare(prioritniFronta[dalsi], prioritniFronta[dalsi2]) == 1) {
+                    if (c.compare(prioritniFronta[topIndex], prioritniFronta[dalsi2]) == 1) {
+                        prohozeni(topIndex, dalsi2);
+                    }
+                } else {
+                }
+                if (a == 0) {
+
+                    topIndex = dalsi - 1;
+                    dalsi = topIndex * 2 + 1;
+                    dalsi2 = topIndex * 2 + 2;
+                    a++;
+
+                } else {
+                    ++topIndex;
+                    dalsi = topIndex * 2 + 1;
+                    dalsi2 = topIndex * 2 + 2;
+
+                }
+            }
+        }
+    }
+
+    private void prohozeni(int prvni, int druhy) {
+        E pom = prioritniFronta[druhy];
+        prioritniFronta[druhy] = prioritniFronta[prvni];
+        prioritniFronta[prvni] = pom;
+    }
+
+    @Override
+    public Stream stream() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void vloz(E element) throws NullPointerException {
+        if (element != null) {
+            E[] pole = (E[]) Array.newInstance(element.getClass(), velikost + 1);
+            if (prioritniFronta == null) {
+                prioritniFronta = pole;
+            }
+            System.arraycopy(prioritniFronta, 0, pole, 0, prioritniFronta.length);
+            pole[prioritniFronta.length - 1] = element;
+            prioritniFronta = pole;
+            velikost++;
+        }
+    }
+
+    @Override
+    public E zpristupniMax() throws IllegalStateException {
+        return prioritniFronta[0];
+    }
+
+    @Override
+    public void zrus() {
+        if (prioritniFronta != null) {
+            for (int i = 0; i < prioritniFronta.length; i++) {
+                prioritniFronta[i] = null;
+            }
+        }
+        prioritniFronta = null;
+        velikost = 0;
+    }
+
+    @Override
+    public Object[] Vybuduj(Comparator c, E[] pole) throws NullPointerException {
+        velikost = pole.length;
+        prioritniFronta = pole;
+        return prioritniFronta;
+
+    }
+
+    public Iterator<E> iteratorSirka() {
+        return new Iterator() {
+            int poz = 0;
+            E element = prioritniFronta[1];
+
+            @Override
+            public boolean hasNext() {
+                return element != null;
+            }
+
+            @Override
+            public E next() {
+                E pom = element;
+                element = prioritniFronta[++poz];
+                return pom;
+            }
+        };
+    }
+
+    public Iterator<E> iteratorHloubka() {
+        return new Iterator() {
+            int poz = 0;
+            IZasobnik<Prvek> zasobnik = new Zasobnik();
+
+            {
+                {
+                    Prvek<E> prvek = new Prvek<>();
+                    prvek.index = 0;
+                    prvek.prvekData = prioritniFronta[0];
+                    zasobnik.vloz(prvek);
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return !(zasobnik.jePrazdny());
+            }
+
+            @Override
+            public Object next() {
+                poz = 0;
+                Prvek pom = zasobnik.odeber();
+                while (true) {
+                    if (poz > 2) {
+                        break;
+                    }
+                    if (pom.index * 2 + 2 <= velikost) {
+                        Prvek<E> prvek = new Prvek<>();
+                        prvek.index = pom.index * 2 + 2;
+                        prvek.prvekData = prioritniFronta[pom.index - 2 + 2];
+                        zasobnik.vloz(prvek);
+                    }
+                    if (pom.index * 2 + 1 <= velikost) {
+                        Prvek<E> prvek2 = new Prvek<>();
+                        prvek2.index = pom.index * 2 + 1;
+                        if (pom.index * 2 + 1 >= velikost) {
+                            break;
+                        } else {
+                            prvek2.prvekData = prioritniFronta[pom.index * 2 + 1];
+                        }
+                        zasobnik.vloz(prvek2);
+                        break;
+                    }
+                    poz++;
+                }
+                return pom.prvekData;
+            }
+        };
+    }
+
+    class Prvek<E> implements Serializable {
+
+        int index;
+        E prvekData;
+    }
+
+}

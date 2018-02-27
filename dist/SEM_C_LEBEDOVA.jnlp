@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="SEM_C_LEBEDOVA.jnlp">
+  <information>
+    <title>SEM_C_LEBEDOVA</title>
+    <vendor>jame_</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="SEM_C_LEBEDOVA.jar" size="54262" download="eager" />
+    <jar href="lib\loremipsum-1.0.jar" size="4789" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SEM_C_LEBEDOVA" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="gui.SEM_B_LEBEDOVA"  name="SEM_C_LEBEDOVA" />
+  <update check="always"/>
+</jnlp>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FXMLDocumentController">
+   <children>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="SEM B">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="Program firma Lebedová" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="label" text="Firma nazev">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="SOMETIMES">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefWidth="155.0" spacing="10.0">
+                                       <children>
+                                          <Label text="Obecně ovládání" textAlignment="CENTER" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handleUloz" text="Ulož" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handleNacti" text="Načti" />
+                                          <Label text="Ovládací firma" textAlignment="CENTER" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handlePridejPobocku" text="Vlož pobočku" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handleOdeberPobocku" text="Odeber pobočku" />
+                                          <Label layoutX="33.0" layoutY="107.0" text="Ovládaní pobočky" textAlignment="CENTER" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handlePridejZamestnance" text="Vlož zaměstnance" />
+                                          <Button maxWidth="135.0" mnemonicParsing="false" onAction="#handleOdeberZamestnance" text="Odeber zaměstnance" />
+                                          <Label text="Operace zpřístupni" />
+                                          <Button mnemonicParsing="false" onAction="#handleZpristupniKoren" prefWidth="135.0" text="Vedoucí pobočky" />
+                                          <Button mnemonicParsing="false" onAction="#handleZpristupniOtce" prefWidth="135.0" text="Vedoucí oddělení" />
+                                          <Button mnemonicParsing="false" onAction="#handleZpristupniSyna" prefWidth="135.0" text="Zaměstnance" />
+                                          <Label text="Index syna" />
+                                          <TextField fx:id="textFieldIndexSyna" alignment="CENTER" text="0" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="5.0" />
+                                       </padding>
+                                    </VBox>
+                                    <ListView fx:id="listViewPobocky" prefWidth="350.0" HBox.hgrow="SOMETIMES" />
+                                    <ListView fx:id="listViewZamestnanci" prefHeight="475.0" prefWidth="376.0" HBox.hgrow="SOMETIMES" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="SEM C">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="SOMETIMES">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" spacing="20.0">
+                                       <children>
+                                          <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleVybuduj" text="Vybuduj" />
+                                          <Button maxWidth="100.0" mnemonicParsing="false" onAction="#handleReorganizuj" text="Reorganizuj" />
+                                          <ComboBox fx:id="comboBoxRazeni" />
+                                          <Separator prefWidth="200.0" />
+                                          <Button mnemonicParsing="false" onAction="#handleZobraz" prefWidth="100.0" text="Aktualni" />
+                                          <Button mnemonicParsing="false" onAction="#handlePridejDoFronty" prefWidth="100.0" text="Pridej" />
+                                          <Button mnemonicParsing="false" onAction="#handleOdeberFronta" prefWidth="100.0" text="Odeber" />
+                                          <Separator prefWidth="200.0" />
+                                          <Button mnemonicParsing="false" onAction="#handleUlozFronta" prefWidth="100.0" text="Uloz" />
+                                          <Button mnemonicParsing="false" onAction="#handleNactiFronta" prefWidth="100.0" text="Nacti" />
+                                          <Separator prefWidth="200.0" />
+                                          <Button mnemonicParsing="false" onAction="#handleZrusFronta" prefWidth="100.0" text="Zrus" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </VBox>
+                                    <ListView fx:id="listFrotna" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
